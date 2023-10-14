@@ -2,9 +2,8 @@
 <html>
 
 <head>
- 
-   
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    </head>
 
 <body>
  
@@ -43,17 +42,39 @@
     <input type="radio" name="Gender" id="female" value="winter">Female<br>   
   </div>
 
-
+  <div id="dvpreg" style="display: none">
+    <div class="radio-buttons">
+     
+        <input type="radio" name="preg" id="preg" value="Pregnant">Pregnant<br>   
+        <input type="radio" name="preg" id="nopreg" value="Not Pregnant">Not Pregnant<br>   
+      </div>
+    
+  </div>
+  
 
         <button id="btn">Calculate</button>
 
         <div id="result"></div> 
     </div>
-  
+   <p>This application shouldnt be used by women who are pregnant</p>
 </body>
 
 
 <script>
+
+
+$(function() {
+   $("input[name='Gender']").click(function() {
+     if ($("#female").is(":checked")) {
+       $("#dvpreg").show();
+     } else {
+       $("#dvpreg").hide();
+     }
+   });
+ });
+
+
+
     window.onload = () => {
     let button = document.querySelector("#btn");
    
@@ -92,6 +113,8 @@
     else {
         const male = document.querySelector('.male');
   const female = document.querySelector('.female');
+  const preg = document.querySelector('.preg');
+  const nopreg = document.querySelector('.nopreg');
   let res;
 
   if(document.getElementById('male').checked == true) {
@@ -103,14 +126,27 @@
    res= 655.0955 + (9.740 * weight) + (1.8496 * height) - (4.6756 * age);
   } 
 
+  
+let bypass="N";
+  if(document.getElementById('preg').checked == true) {
+    result.innerHTML =
+            `  <span> </span>`;
+    alert("Thi app cannot be used by pregnant women");
+   bypass="Y";
+
+  } 
+
+
         // Fixing upto 2 decimal places
+  if(bypass=="N")
+  { 
         let cals =  Math.round(res*100)/100;
-   console.log(cals);
+   
         // Dividing as per the bmi conditions
         result.innerHTML =
             `Calories Needed to maintain weight : <span>${cals}</span>`;
    
-           
+  }        
     }
     }
 </script>
